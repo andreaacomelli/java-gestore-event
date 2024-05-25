@@ -1,7 +1,10 @@
 package org.gestore.eventi;
 
+import java.time.format.DateTimeParseException;
+import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
-import java.text.SimpleDateFormat;
+import java.util.Scanner;
+
 
 public class Evento {
 	
@@ -13,11 +16,11 @@ public class Evento {
 	public Evento(String titolo, LocalDate data, int nPostiTotali, int nPostiPrenotati) {
 		this.setTitolo(titolo);
 		this.setData(data);
-		this.nPostiTotali = nPostiTotali = 20;
-		this.nPostiPrenotati = nPostiPrenotati = 2;
+		this.nPostiTotali = nPostiTotali;
+		this.nPostiPrenotati = nPostiPrenotati;
 		
 		if (data.isBefore(LocalDate.now())) {
-			System.out.println("Inserisci una data futura");
+			throw new IllegalArgumentException("Inserisci una data futura");
 		}
 	}
 
@@ -34,8 +37,10 @@ public class Evento {
 	}
 	
 	public void setData(LocalDate data) {
-		data = LocalDate.of(2024, 5, 23);
-		
+		if (data.isBefore(LocalDate.now())) {
+			throw new IllegalArgumentException("Inserisci una data futura");
+		}
+		this.data = data;
 	}
 
 	public int getnPostiTotali() {
@@ -46,23 +51,59 @@ public class Evento {
 		return nPostiPrenotati;
 	}
 	
+	Scanner scan = new Scanner(System.in);
 	public void prenota() {
-		if (data.isBefore(LocalDate.now()) || nPostiTotali == 20) {
+		if (data.isBefore(LocalDate.now()) || nPostiPrenotati == nPostiTotali) {
 			System.out.println("L'evento è già passato o non ha posti disponibili");
-		} else {nPostiPrenotati =+1;}
+		} else {
+			System.out.println("Quanti posti vuoi prenotare?");
+			int nPostiDaPrenotare = scan.nextInt();
+			nPostiPrenotati += nPostiDaPrenotare;
+		}
 	}
 	
 	public void disdici() {
 		if (data.isBefore(LocalDate.now()) || nPostiPrenotati == 0) {
 			System.out.println("L'evento è già passato o non ci sono prenotazioni");
-		} else {nPostiPrenotati =-1;}
+		} else {
+			System.out.println("Quanti prenotazioni vuoi disdire?");
+			int nPostiDaDisdire = scan.nextInt();
+			nPostiPrenotati -= nPostiDaDisdire;
+		}
+	}
+	
+	public void InserimentoDati() {	
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		
+		System.out.println("Inserisci il titolo dell'evento");
+		titolo = scan.nextLine();
+		
+		System.out.println("Inserisci la data dell'evento(dd/MM/yyyy)");
+		String inputData = scan.nextLine();
+		
+		try {
+            data = LocalDate.parse(inputData, formatter);
+        } catch (DateTimeParseException e) {
+            System.out.println("Formato della data non valido.");
+            return;
+        }
+		
+		System.out.println("Inserisci i posti totali");
+		nPostiTotali = scan.nextInt();
+		
+		System.out.println("Inserisci i posti prenotati");
+		nPostiPrenotati = scan.nextInt();
+		
+		System.out.println("L'evento è stato registrato");
+		
 	}
 	
 	@Override
 	public String toString() {
-	    SimpleDateFormat formatData = new SimpleDateFormat("dd/MM/yyyy");
-	    String stringaData = formatData.format(getData());
-	    return stringaData + "-" + getTitolo()  ;
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	    String stringaData = data.format(formatter);
+	    return stringaData + " - " + getTitolo();
 	}
+
 
 }
