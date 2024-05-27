@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Scanner;
 
 public class Concerto extends Evento {
 	
@@ -33,7 +34,7 @@ public class Concerto extends Evento {
 		this.prezzo = prezzo;
 	}
 	
-	public void inserimentoDatiConcerto() {
+	public void inserimentoDatiConcerto(Scanner scan) {
 		DateTimeFormatter formattaOre = DateTimeFormatter.ofPattern("HH:mm");
 		
 		System.out.println("Inserisci l'orario del concerto (HH:mm):");
@@ -47,8 +48,7 @@ public class Concerto extends Evento {
         }
 		
 		System.out.println("Inserisci il prezzo del biglietto:");
-		int prezzo = scan.nextInt();
-		scan.nextLine(); // Consuma il resto della riga
+		prezzo = scan.nextInt();
 	}
 	
 	@Override
@@ -58,6 +58,6 @@ public class Concerto extends Evento {
 		DateTimeFormatter formattaData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		String stringaOrario = ora.format(formattaOre);
 		
-		return getData().format(formattaData) + stringaOrario + "-" + getTitolo() + "-" + getPrezzo() + "£";
+		return getData().format(formattaData) + stringaOrario + "-" + getTitolo() + "-" + getPrezzo() + "€";
 	}
 }

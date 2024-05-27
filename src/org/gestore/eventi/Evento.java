@@ -93,9 +93,6 @@ public class Evento {
 		
 		System.out.println("Inserisci i posti prenotati");
 		nPostiPrenotati = scan.nextInt();
-		
-		System.out.println("L'evento è stato registrato");
-		
 	}
 	
 	@Override

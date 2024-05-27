@@ -18,15 +18,15 @@ public class Main {
 		
 		if (scelta.equals("generico")) {
 			evento.InserimentoDati();
+			System.out.println("L'evento è stato registrato");
 		}
 		else if (scelta.equals("concerto")) {
 			concerto.InserimentoDati();
-			concerto.inserimentoDatiConcerto();
+			concerto.inserimentoDatiConcerto(scan);
+			System.out.println("L'evento è stato registrato");
 		} else {
 			System.out.println("Inserisci un'opzione valida");
 		}
-		
-		evento.InserimentoDati();
 		
 		System.out.println("Cosa desideri fare: prenotare o disdire una prenotazione?");
 		scelta = scan.nextLine().toLowerCase();
