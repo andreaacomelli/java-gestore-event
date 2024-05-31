@@ -3,7 +3,6 @@ package org.gestore.eventi;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 public class Concerto extends Evento {
@@ -34,21 +33,20 @@ public class Concerto extends Evento {
 		this.prezzo = prezzo;
 	}
 	
-	public void inserimentoDatiConcerto(Scanner scan) {
+	Scanner scan = new Scanner(System.in);
+	
+	public void inserimentoDatiConcerto() {
 		DateTimeFormatter formattaOre = DateTimeFormatter.ofPattern("HH:mm");
 		
 		System.out.println("Inserisci l'orario del concerto (HH:mm):");
 		String inputOrario = scan.nextLine();
 		
-		try {
             ora = LocalTime.parse(inputOrario, formattaOre);
-        } catch (DateTimeParseException e) {
-            System.out.println("Formato dell'orario non valido.");
-            return;
-        }
 		
 		System.out.println("Inserisci il prezzo del biglietto:");
 		prezzo = scan.nextInt();
+		
+		scan.nextLine();
 	}
 	
 	@Override
@@ -58,6 +56,6 @@ public class Concerto extends Evento {
 		DateTimeFormatter formattaData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		String stringaOrario = ora.format(formattaOre);
 		
-		return getData().format(formattaData) + stringaOrario + "-" + getTitolo() + "-" + getPrezzo() + "€";
+		return getData().format(formattaData) + "-" + stringaOrario + "-" + getTitolo() + "-" + getPrezzo() + "€";
 	}
 }

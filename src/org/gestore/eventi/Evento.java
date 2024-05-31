@@ -1,6 +1,5 @@
 package org.gestore.eventi;
 
-import java.time.format.DateTimeParseException;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -52,6 +51,7 @@ public class Evento {
 	}
 	
 	Scanner scan = new Scanner(System.in);
+	
 	public void prenota() {
 		if (data.isBefore(LocalDate.now()) || nPostiPrenotati == nPostiTotali) {
 			System.out.println("L'evento è già passato o non ha posti disponibili");
@@ -81,12 +81,8 @@ public class Evento {
 		System.out.println("Inserisci la data dell'evento(dd/MM/yyyy)");
 		String inputData = scan.nextLine();
 		
-		try {
             data = LocalDate.parse(inputData, formatter);
-        } catch (DateTimeParseException e) {
-            System.out.println("Formato della data non valido.");
-            return;
-        }
+     
 		
 		System.out.println("Inserisci i posti totali");
 		nPostiTotali = scan.nextInt();
