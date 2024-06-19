@@ -36,9 +36,6 @@ public class Evento {
 	}
 	
 	public void setData(LocalDate data) {
-		if (data.isBefore(LocalDate.now())) {
-			throw new IllegalArgumentException("Inserisci una data futura");
-		}
 		this.data = data;
 	}
 
@@ -51,6 +48,31 @@ public class Evento {
 	}
 	
 	Scanner scan = new Scanner(System.in);
+	
+	public void InserimentoDati() throws Exception {	
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		
+		System.out.println("Inserisci il titolo dell'evento");
+		titolo = scan.nextLine();
+		
+		do {
+			System.out.println("Inserisci la data dell'evento(dd/MM/yyyy)");
+			String inputData = scan.nextLine();
+			
+	            data = LocalDate.parse(inputData, formatter);
+	            
+	            if(data.isBefore(LocalDate.now())) {
+	            	throw new Exception("Inserisci una data futura ad oggi");
+	            }
+	            
+		}while(data.isBefore(LocalDate.now()));
+		
+		System.out.println("Inserisci i posti totali");
+		nPostiTotali = scan.nextInt();
+		
+		System.out.println("Inserisci i posti prenotati");
+		nPostiPrenotati = scan.nextInt();
+	}
 	
 	public void prenota() {
 		if (data.isBefore(LocalDate.now()) || nPostiPrenotati == nPostiTotali) {
@@ -70,25 +92,6 @@ public class Evento {
 			int nPostiDaDisdire = scan.nextInt();
 			nPostiPrenotati -= nPostiDaDisdire;
 		}
-	}
-	
-	public void InserimentoDati() {	
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		
-		System.out.println("Inserisci il titolo dell'evento");
-		titolo = scan.nextLine();
-		
-		System.out.println("Inserisci la data dell'evento(dd/MM/yyyy)");
-		String inputData = scan.nextLine();
-		
-            data = LocalDate.parse(inputData, formatter);
-     
-		
-		System.out.println("Inserisci i posti totali");
-		nPostiTotali = scan.nextInt();
-		
-		System.out.println("Inserisci i posti prenotati");
-		nPostiPrenotati = scan.nextInt();
 	}
 	
 	@Override
