@@ -33,7 +33,7 @@ public class Main {
 				     evento.InserimentoDati();
 				     
 				     System.out.println("L'evento è stato registrato");
-				     System.out.println(evento.toString());
+				     System.out.println(evento);
 				     
 				  } 
 				  else if (scelta.equals("concerto")) {
@@ -42,7 +42,7 @@ public class Main {
 				    concerto.inserimentoDatiConcerto();
 				    
 				    System.out.println("L'evento è stato registrato");
-				    System.out.println(concerto.toString());
+				    System.out.println(concerto);
 				    
 				  } else { throw new Exception("Opzione non valida"); }
 				  
@@ -55,7 +55,6 @@ public class Main {
 		 System.out.println("Evento registrato");
 		 programmEventi.addEventi(evento);
 		 System.out.println(programmEventi);
-		 
 		 
 		 do {
 			 System.out.println("Cosa desideri fare: prenotare o disdire una prenotazione?");
@@ -76,9 +75,8 @@ public class Main {
 		 		
 		} while (!scelta.equals("prenotare") && !scelta.equals("disdire"));
 		 
-				System.out.println("Evento aggiornato, il numero dei posti totali è: " + evento.getnPostiTotali() + ", mentre i posti prenotati sono: " + evento.getnPostiPrenotati());
-				programmEventi.addEventi(evento);
-				System.out.println(programmEventi.getEventi());
+		System.out.println("Evento aggiornato, il numero dei posti totali è: " + evento.getnPostiTotali() + ", mentre i posti prenotati sono: " + evento.getnPostiPrenotati());
+		System.out.println(programmEventi);
 				
 		scan.close();
 	}
